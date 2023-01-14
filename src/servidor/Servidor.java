@@ -54,8 +54,42 @@ public class Servidor extends Thread {
             String mensaje = fentrada.readUTF();
             System.out.println("Mensaje recibido: " + mensaje);
 
+            // Creo un numero entero aleatorio (1-100) secreto para el cliente
+            int numero = (int) (Math.random() * 100) + 1;
+            System.out.println("Numero secreto: " + numero);
+
             // Envio un mensaje al cliente
-            fsalida.writeUTF("Hola cliente, soy el servidor");
+            fsalida.writeUTF("Tengo un numero secreto entre 1 y 100, adivinalo...");
+
+            boolean acertado = false;
+
+            do {
+                // Leo el numero que me envia el cliente
+                int numeroCliente = Integer.parseInt(fentrada.readUTF());
+
+                System.out.println("Numero recibido: " + numeroCliente);
+
+                if(numeroCliente == numero)
+                {
+                    fsalida.writeUTF("¡Has acertado el numero!");
+                    fsalida.writeUTF("ok");
+                    acertado = true;
+                }
+                else
+                {
+                    if(numeroCliente > numero)
+                    {
+                        fsalida.writeUTF("El numero es menor");
+                        acertado = false;
+                    }
+                    else
+                    {
+                        fsalida.writeUTF("El numero es mayor");
+                        acertado = false;
+                    }
+                }
+            }while (!acertado);
+
         }
         catch (Exception e)
         {
@@ -70,9 +104,9 @@ public class Servidor extends Thread {
                 sCliente.close();
                 System.out.println("Cliente desconectado");
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                System.out.println("Error: " + x.getMessage());
+                System.out.println("Error: " + ex.getMessage());
             }
         }
     }

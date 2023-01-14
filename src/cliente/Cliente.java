@@ -1,8 +1,11 @@
 package cliente;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Scanner;
 
 public class Cliente {
     static final int PUERTO = 3500;
@@ -26,8 +29,31 @@ public class Cliente {
 
             // Envio un mensaje al servidor
             fsalida.writeUTF("Hola servidor, soy el cliente");
+
+            // Leo el mensaje del servidor
             String datos = fentrada.readUTF();
-            System.out.println("Mensaje recibido: " + datos);
+
+            boolean salir = false;
+            Scanner sc = new Scanner(System.in);
+
+            do {
+                System.out.println(datos);
+
+                if(datos.equals("ok")) {
+                    salir = true;
+                } else {
+                    // Envio un mensaje al servidor
+                    String leerTexto = sc.nextLine();
+                    fsalida.writeUTF(leerTexto);
+
+                    // Leo el mensaje del servidor
+                    datos = fentrada.readUTF();
+                }
+            } while (!salir);
+
+            // Cierro los flujos y el socket
+            fentrada.close();
+            fsalida.close();
         }
         catch (Exception e)
         {
@@ -37,9 +63,8 @@ public class Cliente {
         {
             try
             {
-                fentrada.close();
-                fsalida.close();
                 sCliente.close();
+                System.out.println("Conexion finalizada");
             }
             catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
