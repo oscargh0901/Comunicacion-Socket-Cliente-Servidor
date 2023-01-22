@@ -1,4 +1,4 @@
-package servidor;
+package ejercicio2.servidor;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -54,55 +54,39 @@ public class Servidor extends Thread {
             String mensaje = fentrada.readUTF();
             System.out.println("Mensaje recibido: " + mensaje);
 
-            // Creo un numero entero aleatorio (1-100) secreto para el cliente
-            int numero = (int) (Math.random() * 100) + 1;
-            System.out.println("Numero secreto: " + numero);
+            String nombreUsuario = "";
+            String contrasena = "";
+            int intentos = 0;
 
-            // Envio un mensaje al cliente
-            fsalida.writeUTF("Tengo un numero secreto entre 1 y 100, adivinalo...");
-
-            boolean acertado = false;
-
+            // Solicito el inicio de sesion
             do {
-                // Leo el numero que me envia el cliente
-                int numeroCliente = Integer.parseInt(fentrada.readUTF());
-
-                System.out.println("Numero recibido: " + numeroCliente);
-
-                // Compruebo si el cliente quiere salir
-                if(numeroCliente == -777)
+                if (intentos > 3)
                 {
-                    fsalida.writeUTF("Has apagado el servidor");
-                    System.exit(0);
+                    throw new Exception("Demasiados intentos fallidos");
                 }
 
-                // Compruebo si el numero es correcto
-                if(numeroCliente == numero)
-                {
-                    fsalida.writeUTF("¡Has acertado el numero!");
-                    acertado = true;
-                }
-                else
-                {
-                    if(numeroCliente > numero)
-                    {
-                        fsalida.writeUTF("El numero es menor");
-                        acertado = false;
-                    }
-                    else
-                    {
-                        fsalida.writeUTF("El numero es mayor");
-                        acertado = false;
-                    }
-                }
-            }while (!acertado);
+                fsalida.writeUTF("Introduzca su nombre de usuario: ");
+                nombreUsuario = fentrada.readUTF();
 
+                fsalida.writeUTF("Introduzca su contraseña: ");
+                contrasena = fentrada.readUTF();
+
+                if(!nombreUsuario.contains("javier") && !contrasena.contains("secreta"))
+                {
+                    fsalida.writeUTF("Usuario o contraseña incorrectos");
+                    System.out.println("Intentos: " + intentos);
+                    intentos++;
+                }
+            }while (!nombreUsuario.contains("javier") && !contrasena.contains("secreta"));
+
+            fsalida.writeUTF("Bienvenido " + nombreUsuario);
         }
         catch (Exception e)
         {
             System.out.println("Error: " + e.getMessage());
         }
-        finally {
+        finally
+        {
             try
             {
                 // Cierro los flujos y el socket

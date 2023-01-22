@@ -1,4 +1,4 @@
-package cliente;
+package ejercicio1.cliente;
 
 import java.net.Socket;
 import java.io.DataInputStream;
