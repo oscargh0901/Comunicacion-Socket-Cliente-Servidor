@@ -69,10 +69,17 @@ public class Servidor extends Thread {
 
                 System.out.println("Numero recibido: " + numeroCliente);
 
+                // Compruebo si el cliente quiere salir
+                if(numeroCliente == -777)
+                {
+                    fsalida.writeUTF("Has apagado el servidor");
+                    System.exit(0);
+                }
+
+                // Compruebo si el numero es correcto
                 if(numeroCliente == numero)
                 {
                     fsalida.writeUTF("¡Has acertado el numero!");
-                    fsalida.writeUTF("ok");
                     acertado = true;
                 }
                 else

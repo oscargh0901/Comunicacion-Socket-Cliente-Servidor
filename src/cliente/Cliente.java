@@ -39,7 +39,7 @@ public class Cliente {
             do {
                 System.out.println(datos);
 
-                if(datos.equals("ok")) {
+                if(datos.equals("¡Has acertado el numero!") || datos.equals("Has apagado el servidor")) {
                     salir = true;
                 } else {
                     // Envio un mensaje al servidor
@@ -65,6 +65,7 @@ public class Cliente {
             {
                 sCliente.close();
                 System.out.println("Conexion finalizada");
+                System.exit(0);
             }
             catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
