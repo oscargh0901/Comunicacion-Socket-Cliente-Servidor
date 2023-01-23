@@ -36,7 +36,9 @@ public class Cliente {
 
             do {
                 // Muestro el mensaje del servidor
-                System.out.println(datos);
+                for(int i = 0; i < datos.length(); i++) {
+                    System.out.print(datos.charAt(i));
+                }
 
                 // Envio un mensaje al servidor
                 String leerTexto = sc.nextLine();
@@ -45,8 +47,13 @@ public class Cliente {
                 datos = fentrada.readUTF();
 
                 if(datos.contains("Bienvenido")) {
-                    // he entrado correctamente
+                    System.out.println(datos);
                     salirLogin = true;
+                }
+
+                if(datos.contains("Demasiados intentos")) {
+                    System.out.println(datos);
+                    return;
                 }
             } while (!salirLogin);
 

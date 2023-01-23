@@ -62,6 +62,7 @@ public class Servidor extends Thread {
             do {
                 if (intentos > 3)
                 {
+                    fsalida.writeUTF("Demasiados intentos, cerrando sesion...");
                     throw new Exception("Demasiados intentos fallidos");
                 }
 
