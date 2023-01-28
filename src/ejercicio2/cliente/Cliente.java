@@ -11,8 +11,6 @@ public class Cliente {
 
     public Cliente()
     {
-        DataInputStream fentrada = null;
-        DataOutputStream fsalida = null;
         Socket sCliente = null;
 
         try
@@ -22,48 +20,46 @@ public class Cliente {
             System.out.println("Conectado al servidor " + HOST + ":" + PUERTO);
 
             // Creo los flujos de entrada y salida
-            fentrada = new DataInputStream(sCliente.getInputStream());
-            fsalida = new DataOutputStream(sCliente.getOutputStream());
+            DataInputStream fentrada = new DataInputStream(sCliente.getInputStream());
+            DataOutputStream fsalida = new DataOutputStream(sCliente.getOutputStream());
 
-            // Envio un mensaje al servidor
-            fsalida.writeUTF("Hola servidor, soy el cliente");
+            // Prompt the user for their login credentials
+            Scanner input = new Scanner(System.in);
+            while (true)
+            {
+                System.out.print("Usuario: ");
+                String username = input.nextLine();
+                System.out.print("Contraseña: ");
+                String password = input.nextLine();
 
-            // Leo el mensaje del servidor
-            String datos = fentrada.readUTF();
+                // Send the client's login credentials to the server
+                fsalida.writeUTF(username);
+                fsalida.writeUTF(password);
 
-            boolean salirLogin = false;
-            Scanner sc = new Scanner(System.in);
+                // Get the result of the login attempt from the server
+                String response = fentrada.readUTF();
 
-            do {
-                // Muestro el mensaje del servidor
-                for(int i = 0; i < datos.length(); i++) {
-                    System.out.print(datos.charAt(i));
+                // If the login attempt was successful, break out of the loop
+                if (response.equals("1")) {
+                    break;
                 }
+            }
 
-                // Envio un mensaje al servidor
-                String leerTexto = sc.nextLine();
-                fsalida.writeUTF(leerTexto);
+            System.out.println("\nBienvenid@");
+            while (true) {
+                String result = fentrada.readUTF();
+                System.out.println(result);
 
-                datos = fentrada.readUTF();
+                String command = input.nextLine();
+                fsalida.writeUTF(command);
 
-                if(datos.contains("Bienvenido")) {
-                    System.out.println(datos);
-                    salirLogin = true;
+                String result2 = fentrada.readUTF();
+                System.out.println(result2);
+
+                if(command.equals("exit")) {
+                    break;
                 }
-
-                if(datos.contains("Demasiados intentos")) {
-                    System.out.println(datos);
-                    return;
-                }
-            } while (!salirLogin);
-
-            boolean salirOrdenes = false;
-
-            //
-
-            // Cierro los flujos y el socket
-            fentrada.close();
-            fsalida.close();
+            }
         }
         catch (Exception e)
         {
