@@ -7,15 +7,13 @@ import java.util.Scanner;
 
 public class Cliente {
     static final int PUERTO = 3500;
-    static final String HOST = "localhost";
+    static final String HOST = "localhost"; // recordar cambiar por la IP del servidor
 
     public Cliente()
     {
-        Socket sCliente = null;
-
         try
         {
-            sCliente = new Socket(HOST, PUERTO);
+            Socket sCliente = new Socket(HOST, PUERTO);
 
             System.out.println("Conectado al servidor " + HOST + ":" + PUERTO);
 
@@ -23,7 +21,7 @@ public class Cliente {
             DataInputStream fentrada = new DataInputStream(sCliente.getInputStream());
             DataOutputStream fsalida = new DataOutputStream(sCliente.getOutputStream());
 
-            // Prompt the user for their login credentials
+            // Verifico el login
             Scanner input = new Scanner(System.in);
             while (true)
             {
@@ -32,19 +30,20 @@ public class Cliente {
                 System.out.print("Contraseña: ");
                 String password = input.nextLine();
 
-                // Send the client's login credentials to the server
+                // Envio el usuario y la contraseña al servidor
                 fsalida.writeUTF(username);
                 fsalida.writeUTF(password);
 
-                // Get the result of the login attempt from the server
+                // obtener la respuesta del servidor
                 String response = fentrada.readUTF();
 
-                // If the login attempt was successful, break out of the loop
+                // Si la respuesta es 1, el login es correcto
                 if (response.equals("1")) {
                     break;
                 }
             }
 
+            // Si el login es correcto, se muestra el menú
             System.out.println("\nBienvenid@");
             while (true) {
                 String result = fentrada.readUTF();
@@ -69,7 +68,6 @@ public class Cliente {
         {
             try
             {
-                sCliente.close();
                 System.out.println("Conexion finalizada");
                 System.exit(0);
             }

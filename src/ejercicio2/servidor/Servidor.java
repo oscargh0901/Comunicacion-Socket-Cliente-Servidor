@@ -48,13 +48,13 @@ public class Servidor extends Thread {
     {
         try
         {
-            // Define the valid login credentials
+            // Defino las credenciales validas
             String[][] credentials = {
                     {"admin", "admin"},
                     {"user", "1234"}
             };
 
-            // Set the maximum number of login attempts
+            // Inicializo el contador de intentos
             int tries = 0;
 
             // Creo los flujos de entrada y salida
@@ -66,7 +66,7 @@ public class Servidor extends Thread {
                 String username = fentrada.readUTF();
                 String password = fentrada.readUTF();
 
-                // Check the client's credentials against the valid credentials
+                // Valido las credenciales
                 boolean loginSuccess = false;
                 for (String[] cred : credentials) {
                     if (username.equals(cred[0]) && password.equals(cred[1])) {
@@ -75,7 +75,7 @@ public class Servidor extends Thread {
                     }
                 }
 
-                // Send the result of the login attempt to the client
+                // Envio el resultado de la validacion
                 if (loginSuccess) {
                     fsalida.writeUTF("1");
                     break;
@@ -91,12 +91,12 @@ public class Servidor extends Thread {
                 return;
             }
 
-            // Handle client commands
+            // Muestro el menu de opciones
             while (true) {
                 fsalida.writeUTF("\nIntroduce un comando (ls, cat, get, stop, time, exit):");
                 String command = fentrada.readUTF();
                 if (command.equals("ls")) {
-                    // Code to list files in the server's directory
+                    // Codigo para listar los archivos y directorios del servidor
                     File folder = new File(".");
                     File[] listOfFiles = folder.listFiles();
                     for (int i = 0; i < listOfFiles.length; i++) {
@@ -109,7 +109,7 @@ public class Servidor extends Thread {
                         }
                     }
                 } else if (command.startsWith("cat")) {
-                    // Code to display the contents of a text file
+                    // Codigo para mostrar el contenido de un archivo
                     String[] parts = command.split(" ");
                     String fileName = parts[1];
                     Path path = Paths.get(fileName);
@@ -117,7 +117,7 @@ public class Servidor extends Thread {
                     String fileContent = new String(fileBytes, StandardCharsets.UTF_8);
                     fsalida.writeUTF(fileContent);
                 } else if (command.startsWith("get")) {
-                    // Code to download a file from the server
+                    // Codigo para descargar un archivo
                     String[] parts = command.split(" ");
                     String fileName = parts[1];
                     String destination = parts[2];
@@ -132,18 +132,17 @@ public class Servidor extends Thread {
                     outStream.close();
                     fsalida.writeUTF("Descarga completada!");
                 } else if (command.equals("stop")) {
-                    // Code to stop the server and exit the client
+                    // Codigo para parar el servidor
                     fsalida.writeUTF("Se ha parado el servidor ...");
                     System.exit(0);
                 } else if (command.equals("time")) {
-                    // Code to calculate the data transmission time
+                    // Codigo para medir el tiempo de respuesta
                     Instant start = Instant.now();
-                    // code to send/receive data here
                     Instant end = Instant.now();
                     Duration timeElapsed = Duration.between(start, end);
                     fsalida.writeUTF("Tiempo tomado: " + timeElapsed.toMillis() + " ms");
                 } else if (command.equals("exit")) {
-                    // Code to exit the program
+                    // Codigo para salir del programa
                     fsalida.writeUTF("Apagando el programa...");
                     break;
                 } else {

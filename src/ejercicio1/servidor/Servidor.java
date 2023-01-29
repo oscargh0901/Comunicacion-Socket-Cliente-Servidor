@@ -41,14 +41,11 @@ public class Servidor extends Thread {
 
     public void run()
     {
-        DataInputStream fentrada = null;
-        DataOutputStream fsalida = null;
-
         try
         {
             // Creo los flujos de entrada y salida
-            fentrada = new DataInputStream(sCliente.getInputStream());
-            fsalida = new DataOutputStream(sCliente.getOutputStream());
+            DataInputStream fentrada = new DataInputStream(sCliente.getInputStream());
+            DataOutputStream fsalida = new DataOutputStream(sCliente.getOutputStream());
 
             // Leo el mensaje del cliente
             String mensaje = fentrada.readUTF();
@@ -97,6 +94,9 @@ public class Servidor extends Thread {
                 }
             }while (!acertado);
 
+            // Cierro los flujos
+            fentrada.close();
+            fsalida.close();
         }
         catch (Exception e)
         {
@@ -105,9 +105,6 @@ public class Servidor extends Thread {
         finally {
             try
             {
-                // Cierro los flujos y el socket
-                fentrada.close();
-                fsalida.close();
                 sCliente.close();
                 System.out.println("Cliente desconectado");
             }

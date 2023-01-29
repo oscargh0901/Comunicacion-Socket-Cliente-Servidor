@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c606d96-fb24-40b5-beec-459bcfe7cfc9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/prueba.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ejercicio1/cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/cliente/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ejercicio1/servidor/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/servidor/Servidor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ejercicio2/cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio2/cliente/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ejercicio2/servidor/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio2/servidor/Servidor.java" afterDir="false" />
     </list>
@@ -51,7 +52,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.ejercicio2.cliente.Cliente">
+  <component name="RunManager" selected="Application.Cliente">
     <configuration name="Cliente" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ejercicio1.cliente.Cliente" />
       <module name="Garcia_Hernandez_Oscar_PSP_Tarea3" />
@@ -106,10 +107,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ejercicio2.cliente.Cliente" />
-        <item itemvalue="Application.ejercicio2.servidor.Servidor" />
         <item itemvalue="Application.Cliente" />
         <item itemvalue="Application.Servidor" />
+        <item itemvalue="Application.ejercicio2.cliente.Cliente" />
+        <item itemvalue="Application.ejercicio2.servidor.Servidor" />
       </list>
     </recent_temporary>
   </component>
@@ -127,7 +128,8 @@
       <workItem from="1673898495345" duration="436000" />
       <workItem from="1673899327488" duration="194000" />
       <workItem from="1674503206144" duration="1042000" />
-      <workItem from="1674929036390" duration="1392000" />
+      <workItem from="1674929036390" duration="2392000" />
+      <workItem from="1675021612708" duration="1966000" />
     </task>
     <servers />
   </component>
